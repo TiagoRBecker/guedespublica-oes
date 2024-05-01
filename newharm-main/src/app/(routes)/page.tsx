@@ -18,7 +18,7 @@ const Home = () => {
       {/*Banner*/}
 
       <section className="w-full h-full gap-1 py-[0rem]  md:w-full    items-center flex  flex-col md:gap-10 md:py-[1.5rem]">
-        <h1 className="text-2xl w-full text-blue-900   px-1 text-left md:text-3xl font-bold md:w-[80%]  md:text-center  py-[3rem] ">
+        <h1 className="text-2xl w-full text-[#3b8e7d]  px-1 text-left md:text-3xl font-bold md:w-[80%]  md:text-center  py-[3rem] ">
           Responsabilidade Protegida, Atuação Harmoniosa. Documentos inovadores
           para uma Comunicação segura comseus Pacientes
         </h1>
@@ -27,7 +27,7 @@ const Home = () => {
             <img
               src="/banner.svg"
               alt="banner"
-              className="w-1/2 h-full object-fill"
+              className="w-[60%] h-full object-fill"
             />
           </div>
           <div className="w-full h-full px-2 md:flex  flex-col gap-3">
@@ -75,16 +75,16 @@ const Home = () => {
           </div>
         </div>
 
-        <h1 className="text-2xl w-full text-blue-900    px-1 text-left md:text-3xl font-bold md:w-[80%]  md:text-center  py-[3rem] ">
+        <h1 className="text-xl w-full text-blue-900    px-1 text-left md:text-xl font-bold md:w-[80%]  md:text-center  py-[3rem] ">
           PRONTUÁRIOS EDITÁVEIS E PERSONALIZÁVEIS DESENVOLVIDOS POR
           ESPECIALISTAS DE DIVERSAS ÁREAS DA SAÚDE E ADVOGADOS RENOMADOS NO
           SEGMENTO DE HARMONIZAÇÃO
         </h1>
         <div className="w-full bg-gray-100 py-10">
-          <div className="max-w-[1240px] mx-auto gap-2 grid-cols-1 md:grid md:grid-cols-4 ">
+          <div className="max-w-[1240px] mx-auto gap-10 grid-cols-1 md:grid md:grid-cols-4 ">
             <div className="bg-white py-10 px-2 flex items-center justify-center flex-col">
-              <img src="/5.svg" alt="Icon" className="h-20" />
-              <div className="mt-2 w-full h-36">
+              <img src="/5.svg" alt="Icon" className="h-32" />
+              <div className="mt-2 w-full h-44">
                 <p className="text-justify mt-4">
                   Evite problemas com a subjetividade da{" "}
                   <strong>percepção de resultados por parte do paciente</strong>{" "}
@@ -93,8 +93,8 @@ const Home = () => {
               </div>
             </div>
             <div className="bg-white py-10 px-2 flex items-center justify-center flex-col">
-              <img src="/3.svg" alt="Icon" className="h-20" />
-              <div className="mt-2 w-full h-36">
+              <img src="/3.svg" alt="Icon" className="h-32" />
+              <div className="mt-2 w-full h-44">
                 <p className="text-justify mt-4">
                   Utilize prontuários pautados em{" "}
                   <strong>princípios bioéticos</strong> que descrevam com
@@ -104,8 +104,8 @@ const Home = () => {
               </div>
             </div>
             <div className="bg-white py-10 px-2 flex items-center justify-center flex-col">
-              <img src="/1.svg" alt="Icon" className="h-20" />
-              <div className="mt-2 w-full h-36">
+              <img src="/1.svg" alt="Icon" className="h-32" />
+              <div className="mt-2 w-full h-44">
                 <p className="text-justify mt-4">
                   Use o seu prontuário como principal meio de defesa da sua
                   atividade profissional, através do conhecimento jurídico de
@@ -116,8 +116,8 @@ const Home = () => {
             </div>
 
             <div className="bg-white py-10 px-2 flex items-center justify-center flex-col">
-              <img src="/6.svg" alt="Icon" className="h-20" />
-              <div className="mt-2 w-full h-36">
+              <img src="/6.svg" alt="Icon" className="h-32" />
+              <div className="mt-2 w-full h-44">
                 <p className="text-justify mt-4">
                   Contratos e termos editáveis e personalizáveis - Específicos
                   para cada procedimento e{" "}
@@ -130,7 +130,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <h1 className="text-2xl w-full text-blue-900    px-1 text-left md:text-3xl font-bold md:w-[80%]  md:text-center  py-[3rem] ">
+        <h1 className="text-xl w-full text-blue-900    px-1 text-left md:text-xl font-bold md:w-[80%]  md:text-center  py-[1rem] ">
           SELECIONE ABAIXO OS DOCUMENTOS QUE VOCÊ PRECISA PARA TRABALHAR COM
           MAIS SEGURANÇA JURÍDICA EM SEUS PROCEDIMENTOS
         </h1>

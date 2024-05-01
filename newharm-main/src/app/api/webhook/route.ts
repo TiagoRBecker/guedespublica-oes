@@ -7,7 +7,7 @@ import nodemailer from "nodemailer";
 
 export async function POST(req: Request, res: Response) {
   const { id } = await req.json();
-  
+
   const aws = new S3Client({
     region: "sa-east-1",
     credentials: {
@@ -37,8 +37,8 @@ export async function POST(req: Request, res: Response) {
           },
         },
       });
-      
-      let procuts:any = [];
+
+      let procuts: any = [];
       for (const i of products) {
         const id = `${i.id}.rar`;
 
@@ -49,7 +49,6 @@ export async function POST(req: Request, res: Response) {
         const url = await getSignedUrl(aws, getObjectCommand, {
           expiresIn: 5 * 60,
         });
-        
 
         //procuts.push({ id: i.id, name: i.title, url: url });
       }
@@ -67,7 +66,7 @@ export async function POST(req: Request, res: Response) {
       const info = await transporter.sendMail({
         from: process.env.EMAIL,
         to: "beckertiago09@gmail.com",
-        subject: "Harmonização Prontuários ",
+        subject: "GuedesBampi Publicações ",
 
         html: `
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -935,7 +934,7 @@ export async function POST(req: Request, res: Response) {
                                       >
                                       ${procuts
                                         .map(
-                                          (product:any) => `
+                                          (product: any) => `
                                       <p>${product.name}</p>
                                       <a href="${product.url}">${product.name}</a>
                                      
@@ -1171,7 +1170,10 @@ export async function POST(req: Request, res: Response) {
           `,
       });
     }
-    return NextResponse.json({ message:"E-mail enviado com sucesso" }, { status: 200 });
+    return NextResponse.json(
+      { message: "E-mail enviado com sucesso" },
+      { status: 200 }
+    );
   } catch (error) {
     console.error(error);
     return NextResponse.json({ error }, { status: 500 });

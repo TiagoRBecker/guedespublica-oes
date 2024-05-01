@@ -32,7 +32,7 @@ export async function POST(request: Request) {
        id:4
      },
     data:{
-      description:"Termos de consentimento livre e esclarecido e contrato de prestação de serviços, ambos desenvolvidos de modo específico para cada procedimento. O termo de consentimento livre e esclarecido (TCLE) é uma obrigação legal de todo profissional e o contrato é essencial para estabelecer as responsabilidades de cada parte para evitar problemas comuns deste ramo de atividade, além de definir diversos aspectos legais ligados a idiossincrasia individual em atividades de resultado.",
+      img:"https://res.cloudinary.com/tiagobecker/image/upload/v1714602139/imagens_unidas_sem_titulo_fjp2qf.svg",
       updateAt: new Date()
     }
    

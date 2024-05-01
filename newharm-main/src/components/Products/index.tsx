@@ -1,4 +1,3 @@
-
 import { useRouter } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 import { api } from "@/utils/api";
@@ -37,21 +36,25 @@ const Products = () => {
             id: number;
             title: string;
             description: string;
-            products: [{price:number}];
+            products: [{ price: number }];
             img: string;
           },
           index
         ) => (
           <div
-            className="w-full h-full   border-t-4 border-[#3c8c7c] py-10 mb-2 fle flex-col-reverse md:flex md:flex-row"
+            className="w-full h-full   border-t-4 border-[#3b8e7d] items-center justify-center py-10 mb-2 fle flex-col-reverse md:flex md:flex-row"
             key={index}
           >
-            <div className="w-full px-4  md:w-[60%]">
+            <div className="w-full h-full px-4  md:w-[60%]">
               {categorie.products.map((products: any, index: number) => (
-                <div className="w-full justify-center flex flex-col gap-2 mb-2 " key={index}>
-                  <ul className="flex items-center  gap-2">
-                    
-                    <li className="flex gap-2 cursor-pointer" onClick={()=>addCart(products)}>
+                <div
+                  className="w-full  justify-center flex flex-col gap-2 mb-2 "
+                  key={index}
+                >
+                  <li
+                    className="flex gap-2 cursor-pointer"
+                    onClick={() => addCart(products)}
+                  >
                     <p className="w-8 h-8 flex items-center justify-center btn rounded-sm text-white">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -68,31 +71,55 @@ const Products = () => {
                         />
                       </svg>
                     </p>
-                      <p className="text-[13px]">{products.title}</p>
-                      </li>
-                  </ul>
+                    <p className="text-[13px]">{products.title}</p>
+                  </li>
                 </div>
               ))}
             </div>
-            <div className="w-full px-4 md:w-[40%] flex flex-col gap-2">
-             <div>
+            <div className="w-full  px-4 md:w-[40%] flex flex-col gap-2">
+              <div>
+                <h1 className="text-[#1c124a] font-bold text-xl">
+                  {categorie.title}
+                </h1>
+              </div>
+              <div className="flex items-center gap-2">
+                <p className="text-color font-bold">
+                  {(
+                    Number(categorie.products[0]?.price as any) / 100
+                  ).toLocaleString("pt-br", {
+                    style: "currency",
+                    currency: "BRL",
+                  })}{" "}
+                  unidade
+                </p>
+                <p>
+                  ou{" "}
+                  <span className="text-[#3b8e7d]">
+                    {" "}
+                    6x (
+                    {(
+                      Number(categorie.products[0]?.price as any) / 600
+                    ).toLocaleString("pt-br", {
+                      style: "currency",
+                      currency: "BRL",
+                    })}{" "}
+                    + acréscimos)
+                  </span>{" "}
+                </p>
+              </div>
 
-              <h1 className="text-[#1c124a] font-bold text-xl">{categorie.title}</h1>
-              <p className="text-color font-bold">
-                  {(Number(categorie.products[0]?.price as any) / 100).toLocaleString("pt-br",{style:"currency",currency:"BRL"})} 
-                       
-                      </p>
-             </div>
-            
-            <div>
-
-              <p className="text-[#1c124a] text-justify ">{categorie.description}</p>
-            </div>
-            <div className="w-full flex items-center justify-center">
-              <img src={categorie.img} alt={categorie.title}/>
-            </div>
-             
-             
+              <div>
+                <p className="text-[#1c124a] text-justify ">
+                  {categorie.description}
+                </p>
+              </div>
+              <div className="w-full flex items-center justify-center">
+                <img
+                  src={categorie.img}
+                  alt={categorie.title}
+                  className="w-full h-full"
+                />
+              </div>
             </div>
           </div>
         )
