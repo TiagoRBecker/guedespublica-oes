@@ -20,7 +20,7 @@ const Home = () => {
       <section className="w-full h-full gap-1 py-[0rem]  md:w-full    items-center flex  flex-col md:gap-10 md:py-[1.5rem]">
         <h1 className="text-2xl w-full text-[#3b8e7d]  px-1 text-left md:text-3xl font-bold md:w-[80%]  md:text-center  py-[3rem] ">
           Responsabilidade Protegida, Atuação Harmoniosa. Documentos inovadores
-          para uma Comunicação segura comseus Pacientes
+          para uma Comunicação segura com seus Pacientes
         </h1>
         <div className="w-full   grid-cols-1 md:grid md:grid-cols-2">
           <div className="w-full h-full flex items-center justify-center">
@@ -40,7 +40,7 @@ const Home = () => {
                 <p>Selecione os documentos que seu instituto ofererece</p>
               </div>
               <p className="mt-4 font-bold w-full  md:w-[70%]">
-                Selecione individualmente e adicione ao carrinhoos (TCLE’s+
+                Selecione individualmente e adicione ao carrinho os (TCLE’s+
                 Contratos) disponíveis abaixo,de acordo comos procedimentos que
                 deseja receberem seu e-mail.
               </p>
@@ -54,7 +54,7 @@ const Home = () => {
               </div>
               <p className="mt-4 font-bold md:w-[70%]">
                 Selecione outros documentos como Anamnese para harmonização,
-                Termos acessórios fundamentais, Fichaclínica + Plano de
+                Termos acessórios fundamentais, Ficha clínica + Plano de
                 tratamento e adicione ao carrinho
               </p>
             </div>
@@ -68,7 +68,7 @@ const Home = () => {
               </div>
               <p className="mt-4 font-bold md:w-[70%]">
                 Faça o seu cadastro, realize ocheckout de pagamento e receba
-                agora seus documentos editáveise personalizáveis direto em seu
+                agora seus documentos editáveis e personalizáveis direto em seu
                 e-mail.
               </p>
             </div>
@@ -148,7 +148,7 @@ const Home = () => {
             modelo é cuidadosamente elaborado por especialistas, garantindo
             atender aos padrões profissionais mais exigentes. Além disso, todos
             os nossos modelos são totalmente editáveis, permitindo que os
-            usuários personalizemcada documento de acordo comsuas necessidades
+            usuários personalize cada documento de acordo com suas necessidades
             específicas
           </h2>
         </div>

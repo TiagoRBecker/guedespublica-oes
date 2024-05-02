@@ -18,7 +18,7 @@ export default function Modal({
       case 1:
         return (
           <>
-            <Dialog.Description className="w-full flex items-center justify-center h-[180px]  text-justify text-base text-[#072137] px-5 py-2 ">
+            <Dialog.Description className="h-full md:w-full flex items-center justify-center md:h-[180px]  text-justify text-base text-[#072137] px-5 py-2 ">
               Considerando que os documentos criados pela Contratada são de
               propriedade intelectual da Contratada e cedido somente para uso
               exclusivo do adquirente profissional ora contratante em seu
@@ -63,7 +63,7 @@ export default function Modal({
       case 2:
         return (
           <>
-            <Dialog.Description className="w-full flex items-center justify-center h-[180px]  text-justify text-base text-[#072137] px-5 py-2 ">
+            <Dialog.Description className="h-full md:w-full flex items-center justify-center md:h-[180px]  text-justify text-base text-[#072137] px-5 py-2 ">
               Considerando que os documentos modelos foram elaborados e
               sugeridos por Juristas e profissionais da área da saúde, em
               atividade meio, é obrigação da contratante revisar e alterar
@@ -108,12 +108,12 @@ export default function Modal({
         );
       case 3:
         return (
-          <div className="w-full flex flex-col items-center justify-center h-[180px] text-justify text-base text-[#072137] px-5 py-2 mt-10 ">
+          <div className="h-full md:w-full flex flex-col items-center justify-center md:h-[180px] text-justify text-base text-[#072137] px-5 py-2 mt-10 ">
             <p>
               Ao aceitar os termos de uso, você concorda em cumprir e respeitar
               integralmente as seguintes diretrizes e condições estabelecidas
               neste documento. Estes termos de uso formam um contrato legal
-              entre você e Harmonização Prontuários e regem o uso de nossos
+              entre você e GuedesBampi Publicações e regem o uso de nossos
               serviços e plataformas online.
             </p>
             <div className="flex-col py-4 md:flex md:flex-row gap-2 justify-center items-center w-full ">
@@ -191,7 +191,7 @@ export default function Modal({
       onClose={handleCancel}
       style={{ overflowY: "scroll" }}
     >
-      <Dialog.Panel className="h-full overflow-auto md:flex items-center justify-start flex-col w-[50%] md:h-[500px] mx-auto  py-4  bg-white px-5  rounded-md  relative">
+      <Dialog.Panel className=" overflow-auto md:flex items-center justify-start flex-col w-full h-full  md:h-[500px] md:w-[50%] mx-auto  py-4  bg-white px-5  rounded-md  relative">
         <div className="w-full flex items-center justify-end">
           <button
             onClick={() => setIsOpen(false)}

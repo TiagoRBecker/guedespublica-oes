@@ -18,19 +18,5 @@ export async function GET(req: Request) {
   });
   return NextResponse.json({ products });
 }
-export async function POST(req: Request) {
-   
-  const products = await prisma.products.update({
-   where:{
-    id:14
-   },
-   data:{
-    title:"TERMOS ACESSÓRIOS FUNDAMENTAIS"
 
-    
-   }
-    
-  });
-  return NextResponse.json({ products });
-}
 

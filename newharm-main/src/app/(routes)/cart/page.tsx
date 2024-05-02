@@ -99,12 +99,12 @@ const Cart = () => {
             </h3>
           </div>
         ) : (
-          <div className="w-[80%] mx-auto h-full flex flex-col">
-            <div className="w-full max-h-[50vh] overflow-auto px-4 ">
+          <div className="w-[80%]  grid-cols-1 md:grid md:grid-cols-2 mx-auto">
+            <div className="w-full max-h-[90vh] overflow-auto px-4 ">
               <p className="text-xl font-medium">Lista de Produtos</p>
               {cart?.map((items: any, index: any) => (
                 <div
-                  className=" relative mt-8 space-y-3 rounded-lg border bg-white px-2 py-4 sm:px-6"
+                  className="w-full relative  space-y-3 rounded-lg  bg-white px-2  sm:px-6"
                   key={index}
                 >
                   <p
@@ -126,24 +126,29 @@ const Cart = () => {
                       />
                     </svg>
                   </p>
-                  <div className="flex flex-col rounded-lg bg-white sm:flex-row">
+                  <div className="w-full flex-col md:flex md:flex-row items-center justify-center gap-2  ">
+                    <div className="w-full md:w-[30%]">
                     <img
-                      className="m-2 h-24 w-28 rounded-md border object-cover object-center"
-                      src="https://res.cloudinary.com/tiagobecker/image/upload/v1694523533/WhatsApp_Image_2023-09-11_at_12.59.54_1_ccowxt.jpg"
+                      className="m-2  h-20 rounded-md object-cover object-center"
+                      src="/logo.svg"
                       alt={items.title}
                     />
-                    <div className="flex w-full flex-col px-1 py-4">
-                      <span className="text-black text-base ">
+                    </div>
+                    <div className="w-full md:w-[70%] flex  flex-col px-1 py-4">
+                    <span className="text-black text-base ">
                         {items.title}
                       </span>
 
-                      <p className="text-color">
+                      <p className="text-color w-[40%]">
                         {new Intl.NumberFormat("pt-BR", {
                           style: "currency",
                           currency: "BRL",
                         }).format(items?.price / 100)}
                       </p>
                     </div>
+
+                    
+                   
                   </div>
                 </div>
               ))}
