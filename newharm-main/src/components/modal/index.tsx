@@ -229,7 +229,7 @@ export default function Modal({
               onClick={handlePlus}
               disabled={currentStep === 3}
             >
-              Proximo
+              Próximo
             </button>
           )}
         </div>
