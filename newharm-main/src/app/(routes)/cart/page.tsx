@@ -166,7 +166,7 @@ const Cart = () => {
               </div>
               {error && (
                     <p className="text-red-600 text-sm">
-                      Necessário aceitar os termos do contrato
+                      Necessário aceitar os termos do contrato.
                     </p>
                   )}
               <div className="mt-6 flex items-center justify-between">

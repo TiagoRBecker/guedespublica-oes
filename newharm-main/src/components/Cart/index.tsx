@@ -7,7 +7,7 @@ import { useContext } from "react";
 const Cart = () => {
   const { cart } = useContext(CartContext);
   return (
-    <div className="fixed top-10 right-20 z-50 hidden md:block ">
+    <div className="fixed top-48 right-20 z-50 hidden md:block ">
       {cart.length > 0 && (
         <Link href={"/cart"}>
           <div className="flex items-center gap-2">

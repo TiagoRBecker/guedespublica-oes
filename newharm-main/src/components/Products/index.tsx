@@ -73,8 +73,14 @@ const Products = () => {
                     </p>
                     <p className="text-[13px]">{products.title}</p>
                   </li>
+                 
                 </div>
               ))}
+            <div className="w-full  flex items-center justify-center relative">
+              <div className="scroll-down ">
+
+              </div>
+            </div>
             </div>
             <div className="w-full  px-4 md:w-[40%] flex flex-col gap-2">
               <div>
