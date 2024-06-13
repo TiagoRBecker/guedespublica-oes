@@ -1,99 +1,24 @@
-import mercadopago from "mercadopago";
+
 import prisma from "@/server/prisma";
 import { NextResponse } from "next/server";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 import nodemailer from "nodemailer";
-import IconSvg from "@/components/ICon";
 
-const nfe = require("nfe-io")(
-  "fLUTQ963opclUK0tlQjyP1Mmk28qft9ntQNDuhhzh6SvtvFrAguBLiuaQWbTKB4LZBO"
-);
+
+
 export async function POST(req: Request, res: Response) {
   const { data } = await req.json();
-  console.log(data);
-  const aws = new S3Client({
+
+  const aws = await new S3Client({
     region: "sa-east-1",
     credentials: {
       accessKeyId: process.env.AWSID,
       secretAccessKey: process.env.AWSKEY,
     },
   } as any);
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      authorization: `Basic ${process.env.GAT_DEV}`,
-    },
-  };
-  const request = await fetch(
-    `https://api.pagar.me/core/v5/orders/${data.id}`,
-    options
-  );
-  const nfeItems = data.items.map((item: any) => {
-    return {
-      code: item.code,
-      unitAmount: Number(item.amount / 100),
-      quantity: 1,
-      cfop: 5101,
-      ncm: "30022019",
-      codeGTIN: "SEM GTIN",
-      codeTaxGTIN: "SEM GTIN",
-      tax: {
-        totalTax: 0,
-        icms: {
-          amount: 0,
-          rate: 0,
-          baseTax: 0,
-          baseTaxSTReduction: "0",
-          baseTaxModality: "0",
-          csosn: "102",
-          origin: "0",
-        },
-        pis: {
-          amount: 0,
-          rate: 0,
-          baseTax: 0,
-          cst: "07",
-        },
-        cofins: {
-          amount: 0,
-          rate: 0,
-          baseTax: 0,
-          cst: "07",
-        },
-      },
-      cest: "",
-      description: item.title,
-    };
-  });
-   const getCodeCep = await fetch(`https://viacep.com.br/ws/${data.customer.address.zip_code}/json/`,{
-    method:"GET"
-   })
-   const code = await getCodeCep.json()
-   console.log(code.ibge)
-  const response = await request.json();
-  const nfeOptions = {
-    buyer: {
-      name: "Joao Gomes",
-      address: {
-        city: {
-          code: "4314902",
-          name: "Porto Alegre",
-        },
-        state: "RS",
-        district: "Nova Restinga",
-        street: "rua petronilha antunes",
-        postalCode: "09179-340",
-        number: "204",
-        country: "BRA",
-      },
-      email:"beckertiago09@gmail.com",
-      federalTaxNumber: 8662968678,
-    },
-    items: nfeItems, // Aqui adicionamos os items ao objeto nfeOptions
-  };
-  
+ 
+
 
  
 
@@ -130,48 +55,12 @@ export async function POST(req: Request, res: Response) {
       
       });
     }
-    const dataNfe = products.map((item) => {
-      return {
-        code: "item.id",
-        unitAmount: Number(item.price / 100) ,
-        quantity: 1,
-        cfop: 5102,
-        ncm: "47079000",
-        codeGTIN: "SEM GTIN",
-        codeTaxGTIN: "SEM GTIN",
-        tax: {
-          totalTax: 0,
-          icms: {
-            amount: 0,
-            rate: 0,
-            baseTax: 0,
-            baseTaxSTReduction: "33.33",
-            baseTaxModality: "3",
-            CSOSN: "102",
-            origin: "0",
-          },
-          pis: {
-            amount: 0,
-            rate: 0,
-            baseTax: 0,
-            cst: "99",
-          },
-          cofins: {
-            amount: 0,
-            rate: 0,
-            baseTax: 0,
-            cst: "99",
-          },
-        },
-        cest: "",
-        description: item.title,
-      };
-    });
+   
     const transporter = await nodemailer.createTransport({
       service: "SMTP",
       host: "smtp.hostinger.com",
       port: 465,
-      secure: false,
+      secure: true,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASS,
@@ -1287,40 +1176,7 @@ export async function POST(req: Request, res: Response) {
    
           `,
     });
-    const nfeOptions = {
-      buyer: {
-        name: "Joao Gomes",
-        address: {
-          city: {
-            code: "4314902",
-            name: "Porto Alegre",
-          },
-          state: "RS",
-          district: "Nova Restinga",
-          street: "rua petronilha antunes",
-          postalCode: "09179-340",
-          number: "204",
-          country: "BRA",
-        },
-        email:"beckertiago09@gmail.com",
-        federalTaxNumber: 8662968678,
-      },
-      items: dataNfe, // Aqui adicionamos os items ao objeto nfeOptions
-    };
-    
-    const nfe = await fetch(
-      `https://api.nfse.io/v2/companies/cb64373f935c452fa54be2222a58458e/productinvoices`,
-      {
-        method: "POST",
-        headers: {
-          accept: "application/json",
-          "content-type": "application/json",
-          Authorization:
-            "fLUTQ963opclUK0tlQjyP1Mmk28qft9ntQNDuhhzh6SvtvFrAguBLiuaQWbTKB4LZBO",
-        },
-        body: JSON.stringify(nfeOptions) // Serializa o objeto nfeOptions como JSON
-      }
-    );
+ 
     return NextResponse.json(
       { message: "E-mail e nota fiscal enviadas com sucesso !" },
       { status: 200 }
@@ -1332,8 +1188,5 @@ export async function POST(req: Request, res: Response) {
     await prisma.$disconnect();
   }
  
-  return NextResponse.json(
-    { nfeItems },
-    { status: 200 }
-  );
+ 
 }
