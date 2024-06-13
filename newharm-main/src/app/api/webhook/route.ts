@@ -4,12 +4,14 @@ import { NextResponse } from "next/server";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 import nodemailer from "nodemailer";
-import IconSvg from  "@/components/ICon"
+import IconSvg from "@/components/ICon";
 
-const nfe = require("nfe-io")("fLUTQ963opclUK0tlQjyP1Mmk28qft9ntQNDuhhzh6SvtvFrAguBLiuaQWbTKB4LZBO");
+const nfe = require("nfe-io")(
+  "fLUTQ963opclUK0tlQjyP1Mmk28qft9ntQNDuhhzh6SvtvFrAguBLiuaQWbTKB4LZBO"
+);
 export async function POST(req: Request, res: Response) {
-    const { data } = await req.json();
- 
+  const { data } = await req.json();
+  console.log(data);
   const aws = new S3Client({
     region: "sa-east-1",
     credentials: {
@@ -17,7 +19,7 @@ export async function POST(req: Request, res: Response) {
       secretAccessKey: process.env.AWSKEY,
     },
   } as any);
-   const options = {
+  const options = {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -28,7 +30,69 @@ export async function POST(req: Request, res: Response) {
     `https://api.pagar.me/core/v5/orders/${data.id}`,
     options
   );
+  const nfeItems = data.items.map((item: any) => {
+    return {
+      code: item.code,
+      unitAmount: Number(item.amount / 100),
+      quantity: 1,
+      cfop: 5101,
+      ncm: "30022019",
+      codeGTIN: "SEM GTIN",
+      codeTaxGTIN: "SEM GTIN",
+      tax: {
+        totalTax: 0,
+        icms: {
+          amount: 0,
+          rate: 0,
+          baseTax: 0,
+          baseTaxSTReduction: "0",
+          baseTaxModality: "0",
+          csosn: "102",
+          origin: "0",
+        },
+        pis: {
+          amount: 0,
+          rate: 0,
+          baseTax: 0,
+          cst: "07",
+        },
+        cofins: {
+          amount: 0,
+          rate: 0,
+          baseTax: 0,
+          cst: "07",
+        },
+      },
+      cest: "",
+      description: item.title,
+    };
+  });
+   const getCodeCep = await fetch(`https://viacep.com.br/ws/${data.customer.address.zip_code}/json/`,{
+    method:"GET"
+   })
+   const code = await getCodeCep.json()
+   console.log(code.ibge)
   const response = await request.json();
+  const nfeOptions = {
+    buyer: {
+      name: "Joao Gomes",
+      address: {
+        city: {
+          code: "4314902",
+          name: "Porto Alegre",
+        },
+        state: "RS",
+        district: "Nova Restinga",
+        street: "rua petronilha antunes",
+        postalCode: "09179-340",
+        number: "204",
+        country: "BRA",
+      },
+      email:"beckertiago09@gmail.com",
+      federalTaxNumber: 8662968678,
+    },
+    items: nfeItems, // Aqui adicionamos os items ao objeto nfeOptions
+  };
   
 
  
@@ -36,7 +100,7 @@ export async function POST(req: Request, res: Response) {
   try {
     
     
-    const items = response.items.map((id: any) => parseInt(id.code));
+    const items = data.items.map((id: any) => parseInt(id.code));
     const products = await prisma.products.findMany({
       where: {
         id: {
@@ -1268,7 +1332,8 @@ export async function POST(req: Request, res: Response) {
     await prisma.$disconnect();
   }
  
-
+  return NextResponse.json(
+    { nfeItems },
+    { status: 200 }
+  );
 }
-
-
