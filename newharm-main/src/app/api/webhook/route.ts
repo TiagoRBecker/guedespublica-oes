@@ -4,10 +4,12 @@ import { NextResponse } from "next/server";
 import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 import nodemailer from "nodemailer";
+import IconSvg from  "@/components/ICon"
 
+const nfe = require("nfe-io")("fLUTQ963opclUK0tlQjyP1Mmk28qft9ntQNDuhhzh6SvtvFrAguBLiuaQWbTKB4LZBO");
 export async function POST(req: Request, res: Response) {
-  const { id } = await req.json();
-
+    const { data } = await req.json();
+ 
   const aws = new S3Client({
     region: "sa-east-1",
     credentials: {
@@ -15,7 +17,7 @@ export async function POST(req: Request, res: Response) {
       secretAccessKey: process.env.AWSKEY,
     },
   } as any);
-  const options = {
+   const options = {
     method: "GET",
     headers: {
       accept: "application/json",
@@ -23,52 +25,100 @@ export async function POST(req: Request, res: Response) {
     },
   };
   const request = await fetch(
-    `https://api.pagar.me/core/v5/orders/${id}`,
+    `https://api.pagar.me/core/v5/orders/${data.id}`,
     options
   );
   const response = await request.json();
+  
+
+ 
+
   try {
-    if (response.status === "paid") {
-      const items = response.items.map((id: any) => parseInt(id.code));
-      const products = await prisma.products.findMany({
-        where: {
-          id: {
-            in: items,
+    
+    
+    const items = response.items.map((id: any) => parseInt(id.code));
+    const products = await prisma.products.findMany({
+      where: {
+        id: {
+          in: items,
+        },
+      },
+    });
+
+    let procuts: any = [];
+    for (const i of products) {
+      const id = `${i.id}.rar`;
+
+      const getObjectCommand = new GetObjectCommand({
+        Bucket: "guedesprontuarios",
+        Key: id,
+      });
+      const url = await getSignedUrl(aws, getObjectCommand, {
+        expiresIn: 5 * 60,
+      });
+
+      procuts.push({
+        id: i.id,
+        name: i.title,
+        //@ts-ignor
+        url: url,
+        icon:"Baixar Arquivo!"
+      
+      });
+    }
+    const dataNfe = products.map((item) => {
+      return {
+        code: "item.id",
+        unitAmount: Number(item.price / 100) ,
+        quantity: 1,
+        cfop: 5102,
+        ncm: "47079000",
+        codeGTIN: "SEM GTIN",
+        codeTaxGTIN: "SEM GTIN",
+        tax: {
+          totalTax: 0,
+          icms: {
+            amount: 0,
+            rate: 0,
+            baseTax: 0,
+            baseTaxSTReduction: "33.33",
+            baseTaxModality: "3",
+            CSOSN: "102",
+            origin: "0",
+          },
+          pis: {
+            amount: 0,
+            rate: 0,
+            baseTax: 0,
+            cst: "99",
+          },
+          cofins: {
+            amount: 0,
+            rate: 0,
+            baseTax: 0,
+            cst: "99",
           },
         },
-      });
+        cest: "",
+        description: item.title,
+      };
+    });
+    const transporter = await nodemailer.createTransport({
+      service: "SMTP",
+      host: "smtp.hostinger.com",
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASS,
+      },
+    });
+    const info = await transporter.sendMail({
+      from: process.env.EMAIL,
+      to: data.customer.email,
+      subject: "GuedesBampi Publicações ",
 
-      let procuts: any = [];
-      for (const i of products) {
-        const id = `${i.id}.rar`;
-
-        const getObjectCommand = new GetObjectCommand({
-          Bucket: "guedesprontuarios",
-          Key: id,
-        });
-        const url = await getSignedUrl(aws, getObjectCommand, {
-          expiresIn: 5 * 60,
-        });
-
-        //procuts.push({ id: i.id, name: i.title, url: url });
-      }
-
-      const transporter = await nodemailer.createTransport({
-        service: "SMTP",
-        host: "mail.xn--advogadosdaharmonizao-21b5g.com.br",
-        port: 465,
-        secure: true,
-        auth: {
-          user: process.env.EMAIL,
-          pass: process.env.PASS,
-        },
-      });
-      const info = await transporter.sendMail({
-        from: process.env.EMAIL,
-        to: "beckertiago09@gmail.com",
-        subject: "GuedesBampi Publicações ",
-
-        html: `
+      html: `
         <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
   <html
     dir="ltr"
@@ -554,32 +604,7 @@ export async function POST(req: Request, res: Response) {
                                     border-spacing: 0px;
                                   "
                                 >
-                                  <tr>
-                                    <td
-                                      align="center"
-                                      style="
-                                        padding: 0;
-                                        margin: 0;
-                                        padding-bottom: 10px;
-                                        font-size: 0px;
-                                      "
-                                    >
-                                      <img
-                                        src="https://res.cloudinary.com/tiagobecker/image/upload/v1713454717/logo_p3dy64.ico"
-                                        alt="Logo"
-                                        style="
-                                          display: block;
-                                          border: 0;
-                                          outline: none;
-                                          text-decoration: none;
-                                          -ms-interpolation-mode: bicubic;
-                                          font-size: 12px;
-                                        "
-                                        width="200"
-                                        title="Logo"
-                                      />
-                                    </td>
-                                  </tr>
+                                 
                                 </table>
                               </td>
                             </tr>
@@ -687,7 +712,7 @@ export async function POST(req: Request, res: Response) {
                                           color: #333333;
                                         "
                                       >
-                                        Obrigado por comprar conosco
+                                     Guedes Bampi Publicações
                                       </h1>
                                     </td>
                                   </tr>
@@ -825,6 +850,35 @@ export async function POST(req: Request, res: Response) {
                                           >Clique nos links abaixo para efetuar os
                                           downloads</a
                                         >
+                                          <a
+                                          href=""
+                                          class="es-button"
+                                          target="_blank"
+                                          style="
+                                         
+                                            mso-style-priority: 100 !important;
+                                            text-decoration: none;
+                                            -webkit-text-size-adjust: none;
+                                            -ms-text-size-adjust: none;
+                                            mso-line-height-rule: exactly;
+                                            color: #ffffff;
+                                            font-size: 20px;
+                                            padding: 10px 30px 10px 30px;
+                                            display: inline-block;
+                                            background: red;
+                                            border-radius: 5px;
+                                            font-family: arial, 'helvetica neue',
+                                            helvetica, sans-serif;
+                                            font-weight: normal;
+                                            font-style: normal;
+                                            line-height: 24px;
+                                            width: auto;
+                                            text-align: center;
+                                            mso-padding-alt: 0;
+                                            mso-border-alt: 10px solid red;
+                                          "
+                                          >Por favor, certifique-se de acessar e baixar os documentos dentro desse período. Após 3 horas, os links expirarão e não será mais possível acessá-los</a
+                                        >
                                       </span>
                                     </td>
                                   </tr>
@@ -936,7 +990,7 @@ export async function POST(req: Request, res: Response) {
                                         .map(
                                           (product: any) => `
                                       <p>${product.name}</p>
-                                      <a href="${product.url}">${product.name}</a>
+                                      <a href="${product.url}">${product.icon}</a>
                                      
                                   `
                                         )
@@ -1168,10 +1222,43 @@ export async function POST(req: Request, res: Response) {
   
    
           `,
-      });
-    }
+    });
+    const nfeOptions = {
+      buyer: {
+        name: "Joao Gomes",
+        address: {
+          city: {
+            code: "4314902",
+            name: "Porto Alegre",
+          },
+          state: "RS",
+          district: "Nova Restinga",
+          street: "rua petronilha antunes",
+          postalCode: "09179-340",
+          number: "204",
+          country: "BRA",
+        },
+        email:"beckertiago09@gmail.com",
+        federalTaxNumber: 8662968678,
+      },
+      items: dataNfe, // Aqui adicionamos os items ao objeto nfeOptions
+    };
+    
+    const nfe = await fetch(
+      `https://api.nfse.io/v2/companies/cb64373f935c452fa54be2222a58458e/productinvoices`,
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+          Authorization:
+            "fLUTQ963opclUK0tlQjyP1Mmk28qft9ntQNDuhhzh6SvtvFrAguBLiuaQWbTKB4LZBO",
+        },
+        body: JSON.stringify(nfeOptions) // Serializa o objeto nfeOptions como JSON
+      }
+    );
     return NextResponse.json(
-      { message: "E-mail enviado com sucesso" },
+      { message: "E-mail e nota fiscal enviadas com sucesso !" },
       { status: 200 }
     );
   } catch (error) {
@@ -1180,4 +1267,8 @@ export async function POST(req: Request, res: Response) {
   } finally {
     await prisma.$disconnect();
   }
+ 
+
 }
+
+

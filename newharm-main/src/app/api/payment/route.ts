@@ -105,7 +105,7 @@ export async function POST(req: Request, res: Response) {
     const request = await fetch("https://api.pagar.me/core/v5/orders", options);
 
     const response = await request.json();
-   console.log(response)
+  
     if (response.checkouts[0].payment_url) {
       
 

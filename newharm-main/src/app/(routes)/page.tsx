@@ -4,7 +4,7 @@ import Head from "./head";
 import "aos/dist/aos.css";
 import BottomNav from "@/components/BottomNav";
 import { useEffect, useState } from "react";
-import Whatsszapp from "@/components/WhatssappButtom/intex";
+import Whatsszapp from "@/components/WhatssappButtom";
 import Products from "@/components/Products";
 import Cart from "@/components/Cart";
 
