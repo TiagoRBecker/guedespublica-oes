@@ -171,7 +171,7 @@ export async function POST(req: Request, res: Response) {
       service: "SMTP",
       host: "smtp.hostinger.com",
       port: 465,
-      secure: true,
+      secure: false,
       auth: {
         user: process.env.EMAIL,
         pass: process.env.PASS,
